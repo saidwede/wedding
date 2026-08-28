@@ -34,3 +34,17 @@ body {
   font-family: Arial, Helvetica, sans-serif;
 }
 
+
+@keyframes floatDown {
+  0% { transform: translateY(-200px) rotate(-5deg); opacity: 0; }
+  10% { opacity: 0.8; }
+  90% { opacity: 0.8; }
+  100% { transform: translateY(110vh) rotate(5deg); opacity: 0; }
+}
+
+.balloon-anim {
+  position: absolute;
+  top: -200px;
+  animation: floatDown linear infinite;
+  z-index: 0;
+}

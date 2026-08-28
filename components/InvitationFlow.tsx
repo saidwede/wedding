@@ -23,24 +23,24 @@ const BowGraphic = () => (
 
 const InvitationDetails = () => (
   <>
-    <div className="text-center font-serif tracking-[0.3em] text-2xl leading-relaxed mb-6 uppercase">
-      <p>Saïd</p>
-      <p>BIO WEDE</p>
-      <p className="font-cursive text-3xl lowercase tracking-normal my-1 opacity-80">et</p>
-      <p>Hidayath</p>
-      <p>ALASSANE YATCHE</p>
+    <div className="text-center flex flex-col items-center mb-10 pt-8">
+      <p className="font-cursive text-6xl sm:text-6xl text-[#3a3f38] mb-2 leading-none">Saïd</p>
+      <p className="font-cursive text-5xl sm:text-3xl text-[#3a3f38] mb-2 leading-none">&</p>
+      <p className="font-cursive text-6xl sm:text-6xl text-[#3a3f38] leading-none">Hidayath</p>
     </div>
     
-    <div className="text-center font-serif tracking-widest text-xs leading-loose mb-6">
+    <div className="text-center font-serif tracking-widest text-xs leading-loose mb-6 text-[#3a3f38]">
       <p className="lowercase opacity-80 mb-1">seraient ravis que vous vous joigniez à eux</p>
       <p className="lowercase opacity-80 mb-2">pour célébrer leur mariage le</p>
-      <p className="uppercase mb-4 text-sm font-bold">Samedi 29 Août 2026</p>
+      <p className="uppercase mb-4 text-sm font-bold mt-4">Samedi 29 Août 2026</p>
       
       <div className="mb-4">
         <p className="uppercase opacity-70 text-[10px] mb-1">Mariage Religieux</p>
         <p className="uppercase mb-1">10H00</p>
         <p className="opacity-90 capitalize text-sm">Mosquée Wakaïya (derrière le CHD)</p>
       </div>
+      
+      <p className="font-sans text-xs uppercase tracking-widest my-4 opacity-80">suivi de la réception</p>
       
       <div>
         <p className="uppercase opacity-70 text-[10px] mb-1">Soirée</p>
@@ -51,10 +51,148 @@ const InvitationDetails = () => (
   </>
 );
 
+const FallingBalloons = () => {
+  const [balloons, setBalloons] = useState<any[]>([]);
+
+  useEffect(() => {
+    const newBalloons = Array.from({ length: 15 }).map((_, i) => {
+      const isYellow = Math.random() > 0.5;
+      const left = Math.random() * 100;
+      const duration = 10 + Math.random() * 15; // 10 to 25s
+      const delay = Math.random() * 15; // 0 to 15s delay
+      const size = 30 + Math.random() * 40; // 30px to 70px
+
+      return {
+        id: i,
+        color: isYellow ? '#FEF08A' : '#93C5FD', // light yellow, light blue
+        left: `${left}%`,
+        duration: `${duration}s`,
+        delay: `${delay}s`,
+        size
+      };
+    });
+    setBalloons(newBalloons);
+  }, []);
+
+  return (
+    <div className="absolute inset-0 overflow-hidden pointer-events-none z-20">
+      {balloons.map(b => (
+        <div 
+          key={b.id} 
+          className="balloon-anim flex flex-col items-center"
+          style={{ 
+            left: b.left, 
+            animationDuration: b.duration,
+            animationDelay: b.delay,
+            width: b.size,
+          }}
+        >
+          {/* Balloon shape */}
+          <div 
+            style={{ 
+              width: b.size, 
+              height: b.size * 1.2, 
+              backgroundColor: b.color,
+              borderRadius: '50% 50% 50% 50% / 40% 40% 60% 60%'
+            }}
+            className="shadow-sm opacity-60"
+          />
+          {/* Balloon tie */}
+          <div 
+            style={{
+              width: 0, 
+              height: 0, 
+              borderLeft: `${b.size * 0.1}px solid transparent`,
+              borderRight: `${b.size * 0.1}px solid transparent`,
+              borderBottom: `${b.size * 0.15}px solid ${b.color}`,
+              marginTop: '-2px'
+            }}
+            className="opacity-60"
+          />
+          {/* Balloon string */}
+          <div 
+            style={{
+              width: 1,
+              height: b.size * 1.5,
+              backgroundColor: 'rgba(0,0,0,0.1)',
+            }}
+          />
+        </div>
+      ))}
+    </div>
+  );
+};
+
+const FloralTop = () => (
+  <svg width="100%" height="250" viewBox="0 0 400 250" preserveAspectRatio="xMidYMin slice" className="absolute top-0 left-0 w-full pointer-events-none opacity-80 z-0">
+    <defs>
+      <linearGradient id="leafGrad1" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stopColor="#ffffff" stopOpacity="0.9" />
+        <stop offset="100%" stopColor="#ffffff" stopOpacity="0.4" />
+      </linearGradient>
+      <linearGradient id="leafGrad2" x1="0%" y1="100%" x2="100%" y2="0%">
+        <stop offset="0%" stopColor="#ffffff" stopOpacity="0.8" />
+        <stop offset="100%" stopColor="#ffffff" stopOpacity="0.3" />
+      </linearGradient>
+    </defs>
+    
+    <path d="M-20,-20 Q50,0 80,60 Q20,80 -20,20 Z" fill="url(#leafGrad1)" />
+    <path d="M0,0 Q80,20 120,80 Q40,110 0,60 Z" fill="url(#leafGrad2)" />
+    <path d="M-10,30 Q60,60 90,130 Q10,140 -10,80 Z" fill="url(#leafGrad1)" opacity="0.6" />
+    <path d="M30,-10 Q90,10 150,50 Q100,80 50,20 Z" fill="url(#leafGrad2)" opacity="0.5" />
+    <path d="M0,0 Q100,50 150,120" fill="none" stroke="#ffffff" strokeOpacity="0.8" strokeWidth="1" />
+    <path d="M0,0 Q120,30 200,60" fill="none" stroke="#ffffff" strokeOpacity="0.8" strokeWidth="1" />
+    
+    <path d="M420,-20 Q350,0 320,60 Q380,80 420,20 Z" fill="url(#leafGrad1)" />
+    <path d="M400,0 Q320,20 280,80 Q360,110 400,60 Z" fill="url(#leafGrad2)" />
+    <path d="M410,30 Q340,60 310,130 Q390,140 410,80 Z" fill="url(#leafGrad1)" opacity="0.6" />
+    <path d="M370,-10 Q310,10 250,50 Q300,80 350,20 Z" fill="url(#leafGrad2)" opacity="0.5" />
+    <path d="M400,0 Q300,50 250,120" fill="none" stroke="#ffffff" strokeOpacity="0.8" strokeWidth="1" />
+    <path d="M400,0 Q280,30 200,60" fill="none" stroke="#ffffff" strokeOpacity="0.8" strokeWidth="1" />
+    
+    <path d="M180,20 C190,10 200,20 190,30 C180,40 170,30 180,20" fill="url(#leafGrad1)" />
+    <path d="M220,10 C230,5 240,15 230,25 C220,35 210,20 220,10" fill="url(#leafGrad2)" />
+  </svg>
+);
+
+const FloralBottom = () => (
+  <svg width="100%" height="250" viewBox="0 0 400 250" preserveAspectRatio="xMidYMax slice" className="absolute bottom-0 left-0 w-full pointer-events-none opacity-80 z-0">
+    <defs>
+      <linearGradient id="leafGrad1b" x1="0%" y1="100%" x2="100%" y2="0%">
+        <stop offset="0%" stopColor="#ffffff" stopOpacity="0.9" />
+        <stop offset="100%" stopColor="#ffffff" stopOpacity="0.4" />
+      </linearGradient>
+      <linearGradient id="leafGrad2b" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stopColor="#ffffff" stopOpacity="0.8" />
+        <stop offset="100%" stopColor="#ffffff" stopOpacity="0.3" />
+      </linearGradient>
+    </defs>
+    
+    <path d="M-20,270 Q50,250 80,190 Q20,170 -20,230 Z" fill="url(#leafGrad1b)" />
+    <path d="M0,250 Q80,230 120,170 Q40,140 0,190 Z" fill="url(#leafGrad2b)" />
+    <path d="M-10,220 Q60,190 90,120 Q10,110 -10,170 Z" fill="url(#leafGrad1b)" opacity="0.6" />
+    <path d="M30,260 Q90,240 150,200 Q100,170 50,230 Z" fill="url(#leafGrad2b)" opacity="0.5" />
+    <path d="M0,250 Q100,200 150,130" fill="none" stroke="#ffffff" strokeOpacity="0.8" strokeWidth="1" />
+    <path d="M0,250 Q120,220 200,190" fill="none" stroke="#ffffff" strokeOpacity="0.8" strokeWidth="1" />
+    
+    <path d="M420,270 Q350,250 320,190 Q380,170 420,230 Z" fill="url(#leafGrad1b)" />
+    <path d="M400,250 Q320,230 280,170 Q360,140 400,190 Z" fill="url(#leafGrad2b)" />
+    <path d="M410,220 Q340,190 310,120 Q390,110 410,170 Z" fill="url(#leafGrad1b)" opacity="0.6" />
+    <path d="M370,260 Q310,240 250,200 Q300,170 350,230 Z" fill="url(#leafGrad2b)" opacity="0.5" />
+    <path d="M400,250 Q300,200 250,130" fill="none" stroke="#ffffff" strokeOpacity="0.8" strokeWidth="1" />
+    <path d="M400,250 Q280,220 200,190" fill="none" stroke="#ffffff" strokeOpacity="0.8" strokeWidth="1" />
+    
+    <path d="M170,230 C180,220 190,230 180,240 C170,250 160,240 170,230" fill="url(#leafGrad1b)" />
+  </svg>
+);
+
 const LayoutWrapper = ({ children }: { children: React.ReactNode }) => (
-  <div className="min-h-screen bg-[#FDFBF7] sm:p-8 flex items-center justify-center font-sans text-[#333333]">
-    <div className="bg-[#f2e6db] sm:rounded-md shadow-sm max-w-[420px] w-full relative flex flex-col items-center py-8 px-6 min-h-screen sm:min-h-[auto]">
+  <div className="min-h-screen bg-[#FDFBF7] sm:p-8 flex items-center justify-center font-sans text-[#333333] relative overflow-hidden">
+    <FallingBalloons />
+    <div className="bg-[#f2e6db] sm:rounded-md shadow-sm max-w-[420px] w-full relative flex flex-col items-center py-8 px-6 min-h-screen sm:min-h-[auto] z-10 overflow-hidden">
+      <FloralTop />
       {children}
+      <FloralBottom />
     </div>
   </div>
 );
