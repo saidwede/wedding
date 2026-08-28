@@ -307,7 +307,9 @@ export default function InvitationFlow({ id }: { id: string }) {
   if (status === 'loading') {
     return (
       <LayoutWrapper>
-        <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-[#333]"></div>
+        <div className="flex-1 flex flex-col items-center justify-center w-full min-h-[60vh]">
+          <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-[#333]"></div>
+        </div>
       </LayoutWrapper>
     );
   }
