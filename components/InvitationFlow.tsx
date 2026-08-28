@@ -209,6 +209,7 @@ export default function InvitationFlow({ id }: { id: string }) {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [adminPassword, setAdminPassword] = useState('');
   const [showPasswordInput, setShowPasswordInput] = useState(false);
+  const [isValidationAllowed, setIsValidationAllowed] = useState(false);
 
   useEffect(() => {
     // 1. Get or create deviceId
@@ -218,6 +219,10 @@ export default function InvitationFlow({ id }: { id: string }) {
       localStorage.setItem('wedding_device_id', currentDeviceId);
     }
     setDeviceId(currentDeviceId);
+
+    // Check if validation is allowed (after 29/08/2026 19:00 GMT+1)
+    const unlockDate = new Date('2026-08-29T19:00:00+01:00');
+    setIsValidationAllowed(new Date() >= unlockDate);
 
     // 2. Fetch invitation from Firestore
     const fetchInvitation = async () => {
@@ -414,38 +419,43 @@ export default function InvitationFlow({ id }: { id: string }) {
           <div className="bg-[#e4dacd] text-[#333] p-3 rounded font-medium text-[10px] tracking-widest border border-[#d8ccbc]">
             VALIDÉE ✅
           </div>
-        ) : showPasswordInput ? (
-          <div className="space-y-4">
-            <input 
-              type="password"
-              placeholder="Mot de passe"
-              value={adminPassword}
-              onChange={(e) => setAdminPassword(e.target.value)}
-              className="w-full px-4 py-2 bg-transparent border-b border-[#333] text-center focus:outline-none focus:border-[#000] tracking-wider text-xs"
-            />
-            <div className="flex gap-2 text-[10px]">
-              <button 
-                onClick={() => setShowPasswordInput(false)}
-                className="flex-1 bg-transparent border border-[#d8ccbc] hover:bg-[#e4dacd] text-[#333] py-2 transition tracking-widest"
-              >
-                ANNULER
-              </button>
-              <button 
-                onClick={handleCheck}
-                disabled={isSubmitting || !adminPassword}
-                className="flex-1 bg-[#333] text-[#f2e6db] hover:bg-black py-2 transition tracking-widest disabled:opacity-50"
-              >
-                {isSubmitting ? '...' : 'OK'}
-              </button>
-            </div>
-          </div>
         ) : (
-          <button 
-            onClick={() => setShowPasswordInput(true)}
-            className="w-full bg-transparent border border-[#333] text-[#333] hover:bg-[#333] hover:text-[#f2e6db] py-3 transition tracking-widest text-[10px]"
-          >
-            VALIDER L'ENTRÉE
-          </button>
+          <div className="w-full mt-6 space-y-3 relative z-10">
+            {isValidationAllowed && (
+              showPasswordInput ? (
+                <div className="flex flex-col space-y-3 animate-in fade-in slide-in-from-bottom-2">
+                  <input
+                    type="password"
+                    placeholder="Mot de passe"
+                    value={adminPassword}
+                    onChange={(e) => setAdminPassword(e.target.value)}
+                    className="w-full px-4 py-3 bg-transparent border-b border-[#333] text-center focus:outline-none focus:border-[#7a9071] transition-colors"
+                  />
+                  <div className="flex space-x-2">
+                    <button 
+                      onClick={() => setShowPasswordInput(false)}
+                      className="w-1/3 bg-transparent border border-[#333] text-[#333] py-2 transition tracking-widest text-[10px]"
+                    >
+                      ANNULER
+                    </button>
+                    <button 
+                      onClick={handleCheck}
+                      className="w-2/3 bg-[#333] text-[#f2e6db] py-2 transition tracking-widest text-[10px]"
+                    >
+                      {isSubmitting ? '...' : 'CONFIRMER'}
+                    </button>
+                  </div>
+                </div>
+              ) : (
+                <button 
+                  onClick={() => setShowPasswordInput(true)}
+                  className="w-full bg-transparent border border-[#333] text-[#333] hover:bg-[#333] hover:text-[#f2e6db] py-3 transition tracking-widest text-[10px]"
+                >
+                  VALIDER L'ENTRÉE
+                </button>
+              )
+            )}
+          </div>
         )}
       </div>
     </LayoutWrapper>
