@@ -24,8 +24,7 @@ const greatVibes = Great_Vibes({
 });
 
 export const metadata: Metadata = {
-  title: "Mariage de Saïd et Hidayath",
-  description: "Invitation au mariage de Saïd BIO WEDE et Hidayath ALASSANE YATCHE le Samedi 29 Août 2026.",
+  title: "Invitation",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
