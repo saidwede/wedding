@@ -17,7 +17,7 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
       if (!data.deviceId) {
         return {
           title: "Mariage de Saïd et Hidayath",
-          description: "Invitation au mariage de Saïd BIO WEDE et Hidayath ALASSANE YATCHE le Samedi 29 Août 2026.",
+          description: "RSVP : Merci de bien vouloir confirmer votre présence.",
           openGraph: {
             images: ['/og-image.png'],
           },
