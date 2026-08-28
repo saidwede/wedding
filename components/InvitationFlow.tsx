@@ -9,7 +9,7 @@ import { validateInvitation } from '../app/admin/actions';
 type InvitationStatus = 'loading' | 'not-found' | 'form' | 'invitation' | 'already-claimed';
 
 const BowGraphic = () => (
-  <div className="mb-10 opacity-80">
+  <div className="mb-6 opacity-80">
     <svg width="60" height="90" viewBox="0 0 100 150" fill="none" stroke="#333" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
       <path d="M50 35 C40 10, 15 20, 25 45 C35 65, 45 45, 50 35" />
       <path d="M50 35 C60 10, 85 20, 75 45 C65 65, 55 45, 50 35" />
@@ -23,29 +23,37 @@ const BowGraphic = () => (
 
 const InvitationDetails = () => (
   <>
-    <div className="text-center font-serif tracking-[0.3em] text-xl leading-relaxed mb-10 uppercase">
+    <div className="text-center font-serif tracking-[0.3em] text-2xl leading-relaxed mb-6 uppercase">
       <p>Saïd</p>
       <p>BIO WEDE</p>
-      <p className="font-cursive text-5xl lowercase tracking-normal my-2 opacity-80">et</p>
+      <p className="font-cursive text-3xl lowercase tracking-normal my-1 opacity-80">et</p>
       <p>Hidayath</p>
       <p>ALASSANE YATCHE</p>
     </div>
     
-    <div className="text-center font-serif tracking-widest text-[10px] leading-loose mb-12">
+    <div className="text-center font-serif tracking-widest text-xs leading-loose mb-6">
       <p className="lowercase opacity-80 mb-1">seraient ravis que vous vous joigniez à eux</p>
-      <p className="lowercase opacity-80 mb-4">pour célébrer leur mariage le</p>
-      <p className="uppercase mb-2 text-xs">Samedi 29 Août 2026</p>
-      <p className="uppercase mb-4 text-xs">à 10h00</p>
-      <p className="opacity-90 capitalize">Mosquée </p>
+      <p className="lowercase opacity-80 mb-2">pour célébrer leur mariage le</p>
+      <p className="uppercase mb-4 text-sm font-bold">Samedi 29 Août 2026</p>
       
-      <p className="font-cursive text-3xl lowercase mt-8 tracking-normal opacity-90">Soirée à Hotel SOUNON SERO</p>
+      <div className="mb-4">
+        <p className="uppercase opacity-70 text-[10px] mb-1">Mariage Religieux</p>
+        <p className="uppercase mb-1">10H00</p>
+        <p className="opacity-90 capitalize text-sm">Mosquée Wakaïya (derrière le CHD)</p>
+      </div>
+      
+      <div>
+        <p className="uppercase opacity-70 text-[10px] mb-1">Soirée</p>
+        <p className="uppercase mb-1">19H00</p>
+        <p className="opacity-90 capitalize text-sm">Hôtel Sounon Sero (Von Yayi Boni)</p>
+      </div>
     </div>
   </>
 );
 
 const LayoutWrapper = ({ children }: { children: React.ReactNode }) => (
   <div className="min-h-screen bg-[#FDFBF7] sm:p-8 flex items-center justify-center font-sans text-[#333333]">
-    <div className="bg-[#f2e6db] sm:rounded-md shadow-sm max-w-[420px] w-full relative flex flex-col items-center py-16 px-8 min-h-screen sm:min-h-[auto]">
+    <div className="bg-[#f2e6db] sm:rounded-md shadow-sm max-w-[420px] w-full relative flex flex-col items-center py-8 px-6 min-h-screen sm:min-h-[auto]">
       {children}
     </div>
   </div>
@@ -191,13 +199,13 @@ export default function InvitationFlow({ id }: { id: string }) {
         <BowGraphic />
         <InvitationDetails />
         
-        <div className="w-full mt-auto pt-8 border-t border-[#d8ccbc]">
+        <div className="w-full mt-auto pt-6 border-t border-[#d8ccbc]">
           <h1 className="text-xl font-serif tracking-[0.2em] uppercase text-center mb-2">RSVP</h1>
-          <p className="text-center font-serif tracking-widest text-[10px] leading-relaxed opacity-70 mb-8 lowercase">
+          <p className="text-center font-serif tracking-widest text-[10px] leading-relaxed opacity-70 mb-6 lowercase">
             veuillez remplir vos informations
           </p>
           
-          <form onSubmit={handleSubmitForm} className="w-full space-y-6 font-serif tracking-widest text-xs">
+          <form onSubmit={handleSubmitForm} className="w-full space-y-4 font-serif tracking-widest text-xs">
             <div>
               <label className="block mb-2 opacity-80">NOM COMPLET</label>
               <input 
