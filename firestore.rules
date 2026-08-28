@@ -1,0 +1,25 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /invitations/{invitationId} {
+      // Anyone can read an invitation to see if it exists and check its deviceId
+      allow read: if true;
+      
+      // Update rules:
+      // 1. If it's a new claim (existing deviceId is empty), allow update to set deviceId, name, phone, isParticipating.
+      // 2. If it's already claimed, allow update (e.g. to check) only if the incoming request includes the correct deviceId.
+      allow update: if (
+        // Allow initial claim
+        (!("deviceId" in resource.data) || resource.data.deviceId == null || resource.data.deviceId == "")
+        && request.resource.data.deviceId != null
+      ) || (
+        // Allow subsequent updates by the same device
+        resource.data.deviceId == request.resource.data.deviceId
+      );
+      
+      // Prevent creating or deleting invitations from the client
+      allow create, delete: if false;
+    }
+  }
+}
